@@ -59,6 +59,8 @@ const CONFIG = {
 
 Set `DEBUG_LOGGING: true` to see which detection tier fired in the console
 
+## Usage
+The icons folder contains 4 png images. These are the necessary images for the logo to be displayed. Their relative path is specified in manifest.json. More information regarding these icons and best practices can be found here: https://developer.chrome.com/docs/extensions/develop/ui/configure-icons
 ## Notes
 
 - When Google changes its DOM structure, code will have to be updated
