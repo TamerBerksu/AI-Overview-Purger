@@ -3,25 +3,23 @@ Deletes  unwanted AI "features" of Google including AI mode tab, overview, peopl
 
 # AI Overview Blocker
 
-A lightweight Chrome extension that hides Google's AI Overview, AI Mode tab, and "Things to know" panel from search results — with a one-click toggle in your toolbar.
+A Chrome extension that hides Google's AI Overview, AI Mode tab, and "Things to know" panel from search results
 
 ## Features
 
-- **Hides AI Overview** using tiered detection (data attributes → structural heuristics → text pattern fallback) so it stays reliable even as Google tweaks its markup
+- **Hides AI Overview**
 - **Hides the AI Mode tab**
 - **Hides "Things to know"** panels
-- **One-click toggle** via the extension popup — closes automatically on outside click, positioned natively by Chrome
-- **Debounced detection** using `requestAnimationFrame`, so it doesn't hammer the DOM on every mutation
+- **Hides People Also Ask AI** entries
+- **One-click toggle** via the extension popup
 - **Multi-language pattern matching** as a last-resort fallback (EN, DE, FR, ES, JA, RU, ZH, NL, DA, CZ, RO)
-- Handles Google's SPA-style navigation (History API) so detection re-runs without a full page reload
+- Detections re-run without full page reload
 
 ## Installation
 
 1. Clone or download this repository
-2. Open `chrome://extensions` in Chrome
-3. Enable **Developer mode** (top right toggle)
-4. Click **Load unpacked** and select the project folder
-5. Pin the extension to your toolbar for easy access
+2. Open the extension manager in your prefered browser
+3. Click **Load unpacked** and select the project folder
 
 ## Usage
 
@@ -33,13 +31,13 @@ Click the extension icon in your toolbar to open the popup and flip the switch:
 ## File Structure
 
 ```
-├── manifest.json     # Extension config (Manifest V3)
-├── blocker.js        # Single script — runs as either the popup controller or the content script
-├── toggle.html        # Popup markup
-└── toggle.css          # Popup styling
+├── manifest.json   
+├── blocker.js        
+├── toggle.html         
+└── toggle.css          
 ```
 
-`blocker.js` detects its own context at runtime: if a toggle checkbox exists in the DOM, it runs as the popup; otherwise it runs as the content script on `google.com/search` pages. Both share state through `chrome.storage.local`, kept in sync via `chrome.storage.onChanged`.
+`content.js` detects its own context at runtime: if a toggle checkbox exists in the DOM, it runs as the popup; otherwise it runs as the content script on `google.com/search` pages. Both share state through `chrome.storage.local`, kept in sync via `chrome.storage.onChanged`.
 
 ## How Detection Works
 
@@ -48,12 +46,11 @@ Detection runs in three tiers, stopping at the first match:
 | Tier | Method | Confidence |
 |------|--------|------------|
 | 1 | Google's own `data-async-type` / `folsrch` markers | High |
-| 2 | Structural `data-subtree` heuristics | Medium |
-| 3 | Multi-language text pattern matching (rate-limited) | Low |
+| 2 | Structural `data-subtree` guess | Medium |
+| 3 | Multi-language text pattern matching | Low |
 
 ## Configuration
-
-Toggle individual features on/off by editing the `CONFIG` object at the top of `blocker.js`:
+Features can be turned on/off by editing `CONFIG` at the top of `content.js`:
 
 ```js
 const CONFIG = {
@@ -67,12 +64,14 @@ const CONFIG = {
 };
 ```
 
-Set `DEBUG_LOGGING: true` to see which detection tier fired in the console — useful for spotting when Google changes its markup and Tier 1 stops matching.
+Set `DEBUG_LOGGING: true` to see which detection tier fired in the console
 
 ## Notes
 
-- Google periodically changes its DOM structure, which may require selector updates over time
-- This extension only affects your local browser view — it does not modify search results for anyone else or interact with Google's servers beyond a normal search request
+- When Google changes its DOM structure, code will have to be updated
+- Correction of searches (did you mean ...) gets deleted with AI Overview, will have to look into this in the future
+- The majority of the code for the toggle (CSS and HTML) was taken from: https://uiverse.io/RaspberryBee/calm-deer-81*/
+- Inspiration and certain parts of code (specified in content.js )
 
 ## License
 
