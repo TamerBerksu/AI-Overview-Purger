@@ -11,7 +11,6 @@ Deletes  unwanted AI "features" of Google including AI mode tab, overview, peopl
 - Detections re-run without full page reload
 
 ## Installation
-
 1. Clone or download this repository
 2. Open the extension manager in your preferred browser
 3. Click **Load unpacked** and select the project folder
@@ -25,8 +24,7 @@ Click the extension icon in your toolbar to open the popup and flip the switch:
 
 ## Source Code File Structure
 
-```
-├── manifest.json   
+```  
 ├── blocker.js        
 ├── toggle.html         
 └── toggle.css          
