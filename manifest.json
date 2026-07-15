@@ -6,19 +6,19 @@
   "content_scripts": [
     {
       "matches": ["https://www.google.com/*"],
-      "js": ["content.js"],
+      "js": ["src_and_icons/src/content.js"],
       "run_at": "document_start"
     }
   ],
   "action": {
-    "default_popup": "toggle.html",
+    "default_popup": "src_and_icons/src/toggle.html",
     "default_title": "AI Overview Blocker"
   },
   "icons": {
-    "16": "icons/extension_icon16.png",
-    "32": "icons/extension_icon32.png",
-    "48": "icons/extension_icon48.png",
-    "128": "icons/extension_icon128.png"
+    "16": "src_and_icons/icons/extension_icon16.png",
+    "32": "src_and_icons/icons/extension_icon32.png",
+    "48": "src_and_icons/icons/extension_icon48.png",
+    "128": "src_and_icons/icons/extension_icon128.png"
   },
 
   "browser_specific_settings": {
